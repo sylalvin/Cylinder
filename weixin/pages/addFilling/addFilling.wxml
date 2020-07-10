@@ -1,0 +1,71 @@
+<view>
+  <view class="weui-cells weui-cells_after-title result_title" bindtap="viewCylinder">
+    <text class="result_title_w">扫码:{{scan_number}}</text>
+    <text class="result_title_w">散瓶:{{scan_bulk}}</text>
+    <text class="result_title_w">集格:{{scan_set}}</text>
+    <text class="result_title_w">总气瓶数:{{scan_sum}}</text>
+  </view>
+  <view class="weui-tab">
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_select">
+        <view class="weui-cell__hd weui-cell__hd_in-select-after">
+          <view class="weui-label">充装介质</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="充装介质" type="text" value="{{gasMediumName}}" />
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">开始时间</view>
+        </view>
+        <view class="input__bd">
+          <input class="self-input" value="{{submitData.beginDate}}" placeholder="开始时间" type="text" />
+        </view>
+        <view class="weui-cell__bd">
+          <button class="setTime" bindtap="setBeginTime">开始</button>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">生产批次</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="输入生产批次编号" bindblur="onChangeProductionBatch" type="digit" />
+        </view>
+      </view>
+      <view class="weui-cell  weui-cell_select">
+        <view class="weui-cell__hd  weui-cell__hd_in-select-after">
+          <view class="weui-label">纯度</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker value="{{purenessIndex}}" range="{{purenessItems}}" bindchange="onChangePureness">
+            <view class="weui-select weui-select_in-select-after">{{purenessItems[purenessIndex]}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="weui-cell  weui-cell_select">
+        <view class="weui-cell__hd  weui-cell__hd_in-select-after">
+          <view class="weui-label">充后流向</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker value="{{areaIndex}}" range="{{areaItems}}" bindchange="onChangeArea">
+            <view class="weui-select weui-select_in-select-after">{{areaItems[areaIndex]}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_textarea">
+        <textarea class="weui-textarea" placeholder="填写备注" bindinput="onChangeRemark" data-label="wallThickness" type="digit" />
+      </view>
+    </view>
+  </view>
+  <view class="weui-navbar">
+      <view class="weui-navbar__item">
+        <view class="weui-navbar__title" bindtap="onAddCylinder">添加气瓶</view>
+      </view>
+      <view class="weui-navbar__item weui-bar__item_on">
+        <view class="weui-navbar__title" bindtap="onSubmitMission" style="opacity :{{opacity}};" disabled="{{disabled}}">创建任务</view>
+      </view>
+    <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+  </view>
+</view>  

@@ -1,0 +1,62 @@
+.weui-cells{
+  margin-top: 0;
+}
+.webox{
+  display: block;
+}
+.checkbox{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin: 10px 0;
+}
+.checkbox text{
+  text-align: left;
+  flex: 2;
+  padding-left: 0rpx;
+}
+.checkbox checkbox{
+  text-align: right;
+  flex: 1;
+  padding-right: 40rpx;
+}
+.pa{
+  display: block;
+  text-align: center;
+}
+.db{
+  display: block !important;
+}
+.fl{
+  float: left;
+}
+.fr{
+  float: right;
+}
+.w80{
+  width: 80%;
+  float: left;
+}
+.w20{
+  width: 20%;
+  float: right;
+}
+.c_red{
+  color: red;
+}
+.idate{
+  padding: 5px 0;
+  display: flex;
+}
+.input_date{
+  flex: 1;
+  border: 1px solid #666;
+  padding: 5px 20px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+.weui-cell::before{
+  border-top: 0 !important;
+}

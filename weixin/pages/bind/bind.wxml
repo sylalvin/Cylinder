@@ -1,0 +1,129 @@
+<view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input weui-cell_vcode">
+      <view class="weui-cell__hd">
+        <view class="weui-label">钢瓶号</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input class="weui-input" placeholder="输入钢瓶号/自编码" focus="{{codefocus}}" bindinput="getCylinderByCode" value="{{cylinderCode}}"/>
+      </view>
+    </view>
+    <view class="weui-cell weui-cell_select">
+      <view class="weui-cell__hd weui-cell__hd_in-select-after">
+        <view class="weui-label">气瓶类型</view>
+      </view>
+      <view class="weui-cell__bd">
+        <picker bindchange="onCylinderTypeChange" value="{{cylinderTypeIndex}}" range="{{cylinderTypeArray}}" range-key="{{'cylinderTypeName'}}">
+          <view class="weui-select weui-select_in-select-after">{{cylinderTypeArray[cylinderTypeIndex].cylinderTypeName}}</view>
+        </picker>
+      </view>
+    </view>
+    <view class="weui-cell weui-cell_select">
+      <view class="weui-cell__hd weui-cell__hd_in-select-after">
+        <view class="weui-label">充装介质</view>
+      </view>
+      <view class="weui-cell__bd">
+        <picker bindchange="onGasMediumChange" value="{{gasMediumIndex}}" range="{{gasMediumArray}}"  range-key="{{'gasMediumName'}}">
+          <view class="weui-select weui-select_in-select-after">{{gasMediumArray[gasMediumIndex].gasMediumName}}</view>
+        </picker>
+      </view>
+    </view>
+    <view class="weui-cell weui-cell_select">
+      <view class="weui-cell__hd weui-cell__hd_in-select-after">
+        <view class="weui-label">制造代码</view>
+      </view>
+      <view class="weui-cell__bd">
+        <picker bindchange="onManuCodeChange" value="{{codeIndex}}" range="{{manuCodes}}" range-key="{{'codename'}}">
+          <view class="weui-select weui-select_in-select-after">{{manuCodes[codeIndex].code}}</view>
+        </picker>
+      </view>
+    </view>
+    <view class="weui-cell weui-cell_select">
+      <view class="weui-cell__hd weui-cell__hd_in-select-after">
+        <view class="weui-label">生产日期</view>
+      </view>
+      <view class="weui-cell__bd idate">
+        <input class="input_date" type="number" placeholder="年" value="{{mYear}}" focus="{{myfocus}}" bindfocus="mybfocus"  bindinput="myInputCheck"></input>
+        <input class="input_date" type="number" placeholder="月" value="{{mMonth}}" focus="{{mmfocus}}" bindfocus="mmbfocus" bindinput="mmInputCheck"></input>
+      </view>
+    </view>
+    <view class="weui-cell weui-cell_select">
+      <view class="weui-cell__hd weui-cell__hd_in-select-after">
+        <view class="weui-label">下检日期</view>
+      </view>
+      <view class="weui-cell__bd idate">
+        <input class="input_date" type="number" placeholder="年" value="{{rYear}}" focus="{{ryfocus}}" bindfocus="rybfocus"  bindinput="ryInputCheck"></input>
+        <input class="input_date" type="number" placeholder="月" value="{{rMonth}}" focus="{{rmfocus}}" bindfocus="rmbfocus" bindinput="rmInputCheck"></input>
+      </view>
+    </view>
+    <!-- <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label">集格编号</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input class="weui-input" bindinput="bindinput" placeholder="输入集格编号" value="{{setNumber==null ? '暂未绑定集格' : setNumber}}"/>
+      </view>
+    </view> -->
+
+    <view class="weui-cell weui-cell_select">
+      <view class="weui-cell__hd weui-cell__hd_in-select-after">
+        <view class="weui-label">集格编号</view>
+      </view>
+      <view class="weui-cell__bd idate">
+        <input class="weui-input input_cylinder_scan" placeholder="扫码" bindtap="onSetScan" disabled="disabled"/>
+        <input class="weui-input input_cylinder" adjust-position="true" cursor-spacing="100" placeholder="手动输码" value="{{setNumber==null ? '暂未绑定集格' : setNumber}}" bindinput="bindinput" focus="{{snfocus}}"/>
+      </view>
+    </view>
+      <view class="page-section-spacing" wx:if="{{forSetList.length > 0}}">
+            <scroll-view scroll-y="true" style="height: 300rpx;">
+              <view animation="{{animationData}}" style="opacity: 0;" class="item-text" wx:for="{{forSetList}}" wx:key="index">
+                <text bindtap="onSelectItem" data-set-index="{{index}}">{{item.setNumber}}-{{item.name}}</text>
+              </view>
+            </scroll-view>
+          </view>
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label">公称压力</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input class="weui-input" placeholder="输入公称压力(Mpa)" type="digit" adjust-position="true" cursor-spacing="100" bindblur="onPressureChange" bindinput="pInputCheck" value="{{nominalTestPressure!=0 ? nominalTestPressure: ''}}" focus="{{pfocus}}"/>
+      </view>
+    </view>
+        <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label">钢瓶重量</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input class="weui-input" placeholder="输入钢瓶重量(Kg)" type="digit" adjust-position="true" cursor-spacing="100" bindblur="onWeightChange" bindinput="wInputCheck" value="{{weight!=0 ? weight: ''}}" focus="{{wfocus}}"/>
+      </view>
+    </view>
+        <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label">钢瓶容积</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input class="weui-input" placeholder="输入钢瓶容积(L)" type="digit" adjust-position="true" cursor-spacing="100" bindblur="onVolumeChange" bindinput="vInputCheck" value="{{volume!=0 ? volume: ''}}" focus="{{vfocus}}"/>
+      </view>
+    </view>
+        <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label">钢瓶壁厚</view>
+      </view>
+      <view class="weui-cell__bd">
+        <input class="weui-input" placeholder="输入钢瓶壁厚(mm)" type="digit" adjust-position="true" cursor-spacing="100" bindblur="onNessChange" bindinput="nInputCheck" value="{{wallThickness!=0 ? wallThickness: ''}}" focus="{{nfocus}}"/>
+      </view>
+    </view>
+    <view class="weui-cell weui-cell_select">
+      <view class="weui-cell__hd weui-cell__hd_in-select-after">
+        <view class="weui-label">标签码</view>
+      </view>
+      <view class="weui-cell__bd idate">
+        <input class="weui-input input_cylinder_scan" placeholder="扫码" bindtap="onScan" disabled="disabled"/>
+        <input class="weui-input input_cylinder" type="number" adjust-position="true" cursor-spacing="100" placeholder="手动输码" value="{{cylinderNumber}}" bindinput="manualInput" focus="{{cnfocus}}"/>
+      </view>
+    </view>
+  </view>
+  <view class="weui-btn-area">
+    <button class="weui-btn" type="primary" bindtap="onSubmit" style="opacity :{{opacity}};" disabled="{{disabled}}">确 定</button>
+  </view>
+</view>

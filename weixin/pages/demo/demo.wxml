@@ -1,0 +1,11 @@
+<map 
+  id="map" 
+  style="width: 100%; height: 200px;" 
+  latitude="{{latitude}}" 
+  longitude="{{longitude}}" 
+  markers="{{markers}}" 
+  polyline="{{polyline}}"
+  show-location>
+</map>
+
+<canvas canvas-id="canvas1"></canvas>

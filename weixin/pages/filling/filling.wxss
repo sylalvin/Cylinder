@@ -1,0 +1,42 @@
+.weui-cell__bd {
+  line-height:50rpx;
+  padding-top: 5rpx;
+  padding-left: 12rpx;
+  padding-bottom: 5rpx;
+  white-space:pre-line;
+  width: 700rpx;
+  font-size: 32rpx;
+}
+.weui-cell__left {
+  padding-left: 48rpx;
+}
+
+.weui-loadmore {
+  width: 100%;
+}
+
+.weui-loadmore__tips_in-line {
+  background-color: #F8F8F8;
+  color:#999;
+}
+.weui-cell__ft_in-access::after {
+  left: 640rpx !important;
+  right: 0rpx;
+}
+
+.weui-tab__panel {
+  padding-top: 0 !important;
+}
+.weui-navbar {
+  position: fixed;
+  top: 93%;
+  bottom: 0 !important;
+  border: 0 !important;
+}
+.weui-navbar__item {
+  border-top: 1px #9A9A9A solid !important;
+  background-color: #4F77AB;
+}
+.weui-navbar__title {
+  color: #FFFFFF;
+}

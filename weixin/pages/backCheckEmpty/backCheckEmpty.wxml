@@ -1,0 +1,79 @@
+<view class="page">
+    <view class="page__bd">
+      <navigator url="/pages/backDelete/backDelete" hover-class="navigator-hover">
+        <view class="weui-cells">
+          <view class="weui-cell pa">
+            <view style="display: inline-block; vertical-align: middle;text-align: center;">扫描：{{scan_number}} 散瓶：{{scan_bulk}} 集格：{{scan_set}} 总气瓶数：{{scan_sum}}</view>
+          </view>
+        </view>
+      </navigator>
+          <!-- <view class="weui-cells"  wx:if="{{showProgress}}">
+            <view class="weui-cell pa">
+              <view class="weui-cell w80"><progress percent="{{progress.percent}}" active="true" active-mode="backwards" bindactiveend="bindactiveend">
+            </progress></view>
+            <view class="weui-cell w20">
+              <text>{{progress.content}}</text>
+            </view>
+            </view>
+          </view> -->
+
+          <view class="weui-cells">
+            <view class="weui-cell webox">
+              <checkbox-group prop="checkbox" multi="{{true}}" bindchange="checkboxItemsChange">
+                <view class="checkbox" wx:for="{{checkboxItems}}" wx:key="value" checked="{{item.checked}}">
+                  <text>{{item.value}}</text>
+                  <checkbox value="{{item.name}}" checked="{{item.checked}}"/>
+                </view>
+              </checkbox-group>
+            </view>
+          </view>
+
+          <view class="weui-cells">
+            <view class="weui-cell webox">
+              <checkbox-group prop="checkbox" multi="{{true}}" bindchange="checkboxPassChange">
+                <view class="checkbox" wx:for="{{checkboxPass}}" wx:key="value" checked="{{item.checked}}">
+                  <text>{{item.value}}</text>
+                  <checkbox value="{{item.name}}" checked="{{item.checked}}"/>
+                </view>
+              </checkbox-group>
+            </view>
+          </view>
+
+          <view class="weui-cells">
+            <view class="weui-cell webox">
+              <radio-group class="radio-group" bindchange="radioChange">
+                <radio class="radio" wx:for="{{bottleType}}" wx:key="name" value="{{item.value}}" checked="{{item.checked}}">
+                    <text>{{item.name}}</text>
+                </radio>
+              </radio-group>
+            </view>
+          </view>
+
+          <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_select">
+                  <view class="weui-cell__hd weui-cell__hd_in-select-after" style="flex: 2">
+                      <view class="weui-label">检后流向：</view>
+                  </view>
+                  <view class="weui-cell__bd" style="flex: 1">
+                      <picker bindchange="bindPickerChange" value="{{areaIndex}}" range="{{areaArray}}" range-key="{{'companyAreaName'}}">
+                          <view class="weui-select weui-select_in-select-after">{{companyAreaName?companyAreaName:"请选择"}}</view>
+                      </picker>
+                  </view>
+              </view> 
+          </view>
+
+          <view class="weui-cells weui-cells_after-title">
+              <view class="weui-cell">
+                  <view class="weui-cell__bd">
+                      <textarea bindinput="bindInputChange" class="weui-textarea" placeholder="填写备注" style="height: 3.3em" maxlength="-1" value="{{commonInfo.remark}}" />
+                  </view>
+              </view>
+          </view>
+
+
+        <view class="weui-btn-area">
+            <button class="weui-btn" type="default" bindtap="addCylinder" style="opacity :{{opacity}};" disabled="{{disabled}}">添 加 气 瓶</button><button class="weui-btn" type="primary" bindtap="submitForm" style="opacity :{{opacity}};" disabled="{{disabled}}">提 交</button>
+        </view>
+
+    </view>
+</view>

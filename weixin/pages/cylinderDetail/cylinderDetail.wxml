@@ -1,0 +1,36 @@
+<view class="weui-cells weui-cells_after-title result_title">
+    <text class="result_title_w">标签码: {{cylinderNumber}}</text>
+</view>
+<view class="weui-cells weui-cells_after-title result_title">
+    <text class="result_title_w">钢瓶号: {{cylinderCode}}</text>
+</view>
+<view class="weui-cells weui-cells_after-title result_title">
+    <text class="result_title_w">气瓶类型: {{cylinderTypeName}}</text>
+</view>
+<view class="weui-cells weui-cells_after-title result_title">
+    <text class="result_title_w">充装介质: {{gasMediumName}}</text>
+</view>
+<view class="weui-cells weui-cells_after-title result_title">
+    <text class="result_title_w">公称压力: {{nominalTestPressure}}</text>
+</view>
+<view class="weui-cells weui-cells_after-title result_title">
+    <text class="result_title_w">容积: {{volume}}</text>
+</view>
+<view class="weui-cells weui-cells_after-title result_title">
+    <text class="result_title_w">重量: {{weight}}</text>
+</view>
+<view class="weui-cells weui-cells_after-title result_title">
+    <text class="result_title_w">壁厚: {{wallThickness}}</text>
+</view>
+<view class="weui-cells weui-cells_after-title result_title">
+    <text class="result_title_w">生产日期: {{cylinderManufacturingDate}}</text>
+</view>
+<view class="weui-cells weui-cells_after-title result_title">
+    <text class="result_title_w">下检日期: {{regularInspectionDate}}</text>
+</view>
+<view class="weui-cells weui-cells_after-title result_title">
+    <text class="result_title_w">有效期（报废期）: {{cylinderScrapDate}}</text>
+</view>
+<view class="weui-cells weui-cells_after-title result_title">
+    <text class="result_title_w">最后一次充装时间: {{lastFillTime}}</text>
+</view>

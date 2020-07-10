@@ -1,0 +1,139 @@
+<!-- 未触发登录 -->
+<view wx:if="{{!isLogin}}">
+  <view class="mcontainer">
+      <view class="item">
+          <image src="../../images/func_1.png" class="image" />
+      </view>
+
+      <view class="item">
+       <form bindsubmit="loginBtnClick">
+        <view class="login-item">
+              <input id="login_username" name="login_username" placeholder='请输入用户名'></input>
+        </view>
+        <view class="login-item">
+              <input id="login_pwd" type="password" name="login_pwd" placeholder='请输入密码'></input>
+        </view>
+        <view class="login-item bottom1">
+              <button type='primary' style='background:#3574FA' class="login-btn" form-type='submit'>绑定</button>
+        </view>
+       </form>
+       <view class="login-item bottom">
+              <text class="pary">声明：因系统内模块操作流程涉及到具体的用户，在数据保存时需要记录具体的用户及该用户提交的信息，故使用前必须进行用户登录。</text>
+        </view>
+      </view>
+  </view>
+</view>
+
+<!-- 未授权 -->
+<view wx:elif="{{isLogin && !hasAuthority}}">
+    <view wx:if="{{canIUse}}" >
+        <view class='header'>
+            <image src='../../images/weixin.png'></image>
+        </view>
+
+        <view class='content'>
+            <view>申请获取以下权限</view>
+            <text>获得你的公开信息(昵称，头像等)</text>
+        </view>
+
+        <button class='bottom' type='primary' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">
+            授权登录
+        </button>
+
+        <button class='bottom' type='default' bindtap="cancel">
+            暂不授权
+        </button>
+    </view>
+    <view wx:else>请升级微信版本</view>
+</view>
+
+<!-- 绑定且得授权 -->
+<view wx:elif="{{isBinding && hasAuthority}}">
+  <view class="page">
+    <view class="page__bd">
+      <view class="page__bd">
+          <view class="current_user">
+              <text>{{name}}</text>
+          </view>
+          <view class="sort_box">
+            <view class="item">
+              <navigator url="/pages/backIndex/backIndex">
+                <view class="icon"><image src="../../images/func_1.png" class="icon"></image></view>
+                <text>回厂验空</text>
+              </navigator>
+            </view>
+            <view class="item">
+              <navigator url="/pages/filling/filling">
+                <view class="icon"><image src="../../images/func_2.png" class="icon"></image></view>
+                <text>充装</text>
+              </navigator>
+            </view>
+            <view class="item">
+              <navigator url="/pages/outIndex/outIndex">
+                <view class="icon"><image src="../../images/func_1.png" class="icon"></image></view>
+                <text>充后验满</text>
+              </navigator>
+            </view>
+            <view class="item">
+              <navigator url="/pages/sendUnload/sendUnload">
+                <view class="icon"><image src="../../images/func_4.png" class="icon"></image></view>
+                <text>发瓶卸货</text>
+              </navigator>
+            </view>
+            <view class="item">
+              <navigator url="/pages/cusreBottle/cusreBottle">
+                <view class="icon"><image src="../../images/func_5.png" class="icon"></image></view>
+                <text>客户回瓶</text>
+              </navigator>
+            </view>
+            <view class="item">
+              <navigator url="/pages/bind/bind">
+                <view class="icon"><image src="../../images/func_6.png" class="icon"></image></view>
+                <text>气瓶绑码</text>
+              </navigator>
+            </view>
+            <view class="item">
+              <navigator url="/pages/warehouse/warehouse">
+                <view class="icon"><image src="../../images/func_7.png" class="icon"></image></view>
+                <text>厂外流转</text>
+              </navigator>
+            </view>
+            <view class="item">
+              <navigator url="/pages/inspection/inspection">
+                <view class="icon"><image src="../../images/func_8.png" class="icon"></image></view>
+                <text>定期检测</text>
+              </navigator>
+            </view>
+            <view class="item">
+              <navigator url="/pages/repair/repair">
+                <view class="icon"><image src="../../images/func_9.png" class="icon"></image></view>
+                <text>维修</text>
+              </navigator>
+            </view>
+            <view class="item">
+              <navigator url="/pages/maintain/maintain">
+                <view class="icon"><image src="../../images/func_9.png" class="icon"></image></view>
+                <text>气瓶维护</text>
+              </navigator>
+            </view>
+            <view class="item">
+              <navigator url="/pages/scrap/scrap">
+                <view class="icon"><image src="../../images/func_11.png" class="icon"></image></view>
+                <text>报废</text>
+              </navigator>
+            </view>
+            <view class="item">
+              <navigator url="/pages/outStockIndex/outStockIndex">
+                <view class="icon"><image src="../../images/func_7.png" class="icon"></image></view>
+                <text>出库</text>
+              </navigator>
+            </view>
+            <view class="empty_item">
+              <view class="icon"></view>
+              <text></text>
+            </view>
+          </view>
+      </view>
+    </view>
+  </view>
+</view>

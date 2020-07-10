@@ -1,0 +1,33 @@
+<view class="page">
+    <view class="page__bd">
+
+        <view class="weui-cells">
+            <view class="weui-cell pa">
+                <view style="display: inline-block; vertical-align: middle;text-align: center;">扫描：{{scan_number}} 散瓶：{{scan_bulk}} 集格：{{scan_set}} 总气瓶数：{{scan_sum}}</view>
+            </view>
+        </view>
+
+        <block wx:for="{{allCylinderList}}" wx:key="cylinderNumber" wx:for-item='item'>
+      <navigator url="/pages/cylinderDetail/cylinderDetail?moduleName=stock&cylinderNumber={{item.cylinderNumber}}" hover-class="navigator-hover">
+      <view class="weui-cells">
+            <view class="weui-cell flex">
+                <text class="f4">
+                    <text class="w100">标签码：{{item.cylinderNumber}}\n</text>
+                    <text class="w100">自有编码/钢瓶号：{{item.cylinderCode}}\n</text>
+                    <text class="w100">充装介质：{{item.gasMediumName}}\n</text>
+                    <text class="w100">气瓶类型：{{item.cylinderTypeName}}\n</text>
+                    <text class="w100">下检日期：{{item.regularInspectionDate}}\n</text>
+                    <text class="w100">有效期（报废期）：{{item.cylinderScrapDate}}</text>
+                </text>
+                <button class="f1 deleteBtn" type="default" catchtap="deleteCylinder" data-set-id="{{item.setId}}" data-cylinder-number="{{item.cylinderNumber}}">删 除</button>
+            </view>
+        </view>
+        </navigator>
+      </block>
+
+        <view wx:if="{{ allCylinderList.length == 0 }}" class="weui-loadmore weui-loadmore_line">
+            <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+        </view>
+
+    </view>
+</view>

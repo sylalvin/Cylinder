@@ -1,0 +1,10 @@
+.weui-cell__bd {
+  overflow: hidden;
+  padding-right: 10px;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+}
+.result_title{
+  padding: 10px 20px;
+  text-align: left;
+}

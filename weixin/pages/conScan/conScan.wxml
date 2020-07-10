@@ -1,0 +1,8 @@
+
+<cover-view class="camera_outside">
+    <camera class="camera" mode="scanCode" device-position="back" flash="{{flash}}" binderror="error" bindscancode="success"></camera>
+</cover-view>
+
+<cover-view class="line_outside"><cover-view class="line" animation="{{animationData}}"></cover-view></cover-view>
+<input class="weui-input input" placeholder="时间间隔（s）" bindinput="changeTime" value="{{time}}"/>
+<button style="margin: 10px;" type="warn" bindtap="onFlash">打开/关闭手电筒</button>

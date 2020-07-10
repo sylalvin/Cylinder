@@ -1,0 +1,139 @@
+.page__bd {
+  padding-bottom: 0rpx!important;
+}
+.current_user {
+  text-align: center;
+  color:#666;
+  width: 100%;
+  margin-bottom: 30rpx;
+}
+.sort_box {
+  display: flex;
+  margin: 10rpx 30rpx 0rpx 30rpx;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.sort_box .item {
+  text-align: center;
+  width: 33%;
+  margin-bottom: 40rpx;
+}
+.sort_box .empty_item {
+  width: 33%;
+  height: 0;
+}
+.sort_box .item .icon{
+  width: 140rpx;
+  height: 140rpx;
+  line-height: 130rpx;
+  /*background-color: #4a95dc;*/
+  color: #fff;
+  text-align: center;
+  border-radius: 50%;
+  margin: 0 auto 10rpx;
+}
+.header {
+    margin: 90rpx 0 90rpx 50rpx;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    width: 650rpx;
+    height: 300rpx;
+    line-height: 450rpx;
+}
+.header image {
+    width: 200rpx;
+    height: 200rpx;
+}
+.content {
+    margin-left: 50rpx;
+    margin-bottom: 90rpx;
+}
+.content text {
+    display: block;
+    color: #9d9d9d;
+    margin-top: 40rpx;
+}
+.bottom1 {
+    width: 100% !important;
+}
+.bottom {
+    border-radius: 80rpx;
+    margin: 50rpx 50rpx;
+    font-size: 35rpx;
+}
+.pary{
+  color: #999;
+}
+.mcontainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+} 
+
+.mcontainer .item{
+    flex-grow:1;
+    height: 30%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 96%;
+    padding: 0 2%;
+}
+
+.mcontainer .image{
+    width: 300rpx;
+    height: 300rpx;  
+}
+
+.mcontainer .login-item{
+    width: 90%;
+    margin-top: 30rpx;
+    border-bottom: 1px solid #eee;
+    flex-grow:1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 20rpx;
+}
+
+.mcontainer .bottom{
+     border-bottom: 0px;
+}
+
+.mcontainer .login-item-info{
+    font-size: 8px;
+    color: #888;
+     padding-bottom: 20rpx;
+}
+
+.mcontainer .login-pwd{
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+    align-items: center;
+  
+}
+
+.mcontainer .login-pwd text{
+    height: 100%;
+    font-size: 14px;
+    color: #888;
+    display: flex;
+     
+}
+.mcontainer .login-btn{
+    width: 80%;
+    background-color: #3574FA;
+}
+
+.mcontainer .login-btn:hover{
+    width: 80%;
+    color: white;
+    border-radius: 0;
+
+}

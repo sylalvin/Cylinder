@@ -1,0 +1,37 @@
+.weui-cells{
+  margin-top: 0;
+}
+.webox{
+  display: block;
+}
+.checkbox{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin: 10rpx;
+}
+.checkbox text{
+  text-align: left;
+  flex: 2;
+  padding-left: 40rpx;
+}
+.checkbox checkbox{
+  text-align: right;
+  flex: 1;
+  padding-right: 40rpx;
+}
+.pa{
+  display: block;
+  text-align: center;
+}
+.db{
+  display: block !important;
+}
+.fl{
+  float: left;
+}
+.fr{
+  float: right;
+}

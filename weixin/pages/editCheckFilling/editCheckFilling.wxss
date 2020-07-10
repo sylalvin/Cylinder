@@ -1,0 +1,43 @@
+.weui-cells{
+  margin-top: 0;
+}
+.webox{
+  display: block;
+}
+
+.pa{
+  display: block;
+  text-align: center;
+}
+
+.db{
+  display: block !important;
+}
+.fl{
+  float: left;
+}
+.fr{
+  float: right;
+}
+.flex{
+  display: flex;
+}
+.f1{
+  flex: 1;
+  
+}
+.f4{
+  flex: 4;
+  word-break: break-all;
+}
+
+.w100{
+  width: 100%;
+}
+
+.deleteBtn{
+  padding: auto 0;
+  margin: auto 10px;
+  line-height: 2;
+  color: red !important;
+}

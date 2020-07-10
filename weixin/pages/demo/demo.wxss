@@ -1,0 +1,5 @@
+.canvas1{
+  width: 500px;
+  height: 500px;
+  transform: scale(0.5);
+}

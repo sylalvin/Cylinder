@@ -1,0 +1,53 @@
+page {
+  padding-top: 30rpx;
+}
+.search_item{
+  padding-left: 276rpx;
+}
+.item-text{
+  padding: 5px;
+  font-size: 20px;
+  border-top: .5px dotted #aaa;
+  text-align: center;
+}
+.item-text text{
+  color: #666
+}
+scroll-view{
+  background-color: #efefef;
+}
+.idate{
+  padding: 5px 0;
+  display: flex;
+}
+.input_date{
+  flex: 1;
+  border: 1px solid #666;
+  padding: 5px 20px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+.input_cylinder{
+  flex: 3;
+  border: 1px solid #666;
+  padding: 5px 20px;
+  border-radius: 5px;
+  margin-right: 5px;
+  height: 1.4rem;
+  min-height: 1.4rem;
+  line-height: 1.4rem;
+}
+.input_cylinder_scan{
+  flex: 1;
+  border: 1px solid #666;
+  background-color: greenyellow;
+  padding: 5px 20px;
+  border-radius: 5px;
+  margin-right: 5px;
+  height: 1.4rem;
+  min-height: 1.4rem;
+  line-height: 1.4rem;
+}
+.weui-btn-area{
+  margin: 5px 5px 50px;
+}

@@ -1,0 +1,63 @@
+<view class="page">
+    <view class="page__bd">
+    <view wx:if="{{ !isShow }}" class="weui-loadmore weui-loadmore_line">
+            <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+        </view>
+<block wx:if="{{ isShow }}">
+          <navigator url="/pages/cylinderDetail/cylinderDetail?moduleName=maintain&cylinderNumber={{cylinderInfo.cylinderNumber}}" hover-class="navigator-hover">
+          <view class="weui-cells">
+            <view class="weui-cell flex">
+                <text class="f4">
+                    <text class="w100">标签码：{{cylinderInfo.cylinderNumber}}\n</text>
+                    <text class="w100">自有编码/钢瓶号：{{cylinderInfo.cylinderCode}}\n</text>
+                    <text class="w100">充装介质：{{cylinderInfo.gasMediumName}}\n</text>
+                    <text class="w100">气瓶类型：{{cylinderInfo.cylinderTypeName}}\n</text>
+                    <text class="w100">下检日期：{{cylinderInfo.regularInspectionDate}}\n</text>
+                    <text class="w100">有效期（报废期）：{{cylinderInfo.cylinderScrapDate}}</text>
+                </text>
+            </view>
+        </view>
+    </navigator>
+
+          <view class="weui-cells">
+            <view class="weui-cell webox">
+              <checkbox-group prop="checkbox" multi="{{true}}" bindchange="checkboxItemsChange">
+                <view class="checkbox" wx:for="{{checkboxItems}}" wx:key="value">
+                  <text>{{item.value}}</text>
+                  <checkbox value="{{item.name}}" checked="{{item.checked}}"/>
+                </view>
+              </checkbox-group>
+            </view>
+          </view>
+
+          <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_select">
+                  <view class="weui-cell__hd weui-cell__hd_in-select-after" style="flex: 1">
+                      <view class="weui-label">改后介质：</view>
+                  </view>
+                  <view class="weui-cell__bd" style="flex: 2">
+                      <picker bindchange="bindPickerChange" value="{{mIndex}}" range="{{typeMediumList}}" range-key="{{'gasMediumName'}}">
+                          <view class="weui-select weui-select_in-select-after">{{gasMediumName?gasMediumName:"请选择"}}</view>
+                      </picker>
+                  </view>
+              </view> 
+          </view>
+
+          <view class="weui-cells weui-cells_after-title">
+              <view class="weui-cell">
+                  <view class="weui-cell__bd">
+                      <textarea bindinput="bindInputChange" class="weui-textarea" placeholder="填写备注" style="height: 3.3em" maxlength="-1" value="{{cylinderInfo.remark}}" />
+                  </view>
+              </view>
+          </view>
+    </block>
+
+
+        <view class="weui-btn-area">
+            <button class="weui-btn" type="default" bindtap="addCylinder" style="opacity :{{opacity}};" disabled="{{disabled}}">添 加 气 瓶</button><button class="weui-btn" type="primary" bindtap="submitForm" style="opacity :{{opacity}};" disabled="{{disabled}}">提 交</button>
+        </view>
+
+        
+
+    </view>
+</view>
