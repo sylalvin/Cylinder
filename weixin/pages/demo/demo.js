@@ -37,7 +37,6 @@ Page({
     var map = wx.createMapContext("map", this);
     wx.getLocation({
       success: function(res) {
-        console.log(JSON.stringify(res));
         that.setData({
           latitude: res.latitude,
           longitude: res.longitude,

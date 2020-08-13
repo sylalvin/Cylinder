@@ -53,10 +53,6 @@ Page({
 
   onShow: function () {
     var that = this;
-    // 屏幕保持常亮
-    wx.setKeepScreenOn({
-      keepScreenOn: true,
-    })
     // 执行删除后的初始化气瓶数据
     var setList = app.globalData.cusreSetList;
     var cylinderList = app.globalData.cusreCylinderList;

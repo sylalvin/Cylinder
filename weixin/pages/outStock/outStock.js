@@ -31,10 +31,6 @@ Page({
 
   onShow: function () {
     var that = this;
-    // 屏幕保持常亮
-    wx.setKeepScreenOn({
-      keepScreenOn: true,
-    })
     // 执行删除后的初始化气瓶数据
     var setList = app.globalData.stockSetList;
     var cylinderList = app.globalData.stockCylinderList;
@@ -145,7 +141,6 @@ Page({
           "Content-Type": "application/x-www-form-urlencoded",
         },
         success: (res) => {
-          console.log('res' + JSON.stringify(res));
           if (that.judge(res.data.data)) {
             let forTransNumberList = [];
             for (let k = 0; k < res.data.data.length; k++) {

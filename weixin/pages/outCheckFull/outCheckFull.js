@@ -9,6 +9,7 @@ Page({
     qcmappversion: '1.0.0',
     disabled: false,
     opacity: 0.9,
+    duration: 3000,
     scanFlag: true,
     scan_number: 0,
     scan_bulk: 0,
@@ -52,6 +53,20 @@ Page({
 
   onShow: function () {
     var that = this;
+    if (!util.checkLogin()) {
+      wx.showToast({
+        title: '您还未登录,请先登录',
+        icon: 'none',
+        mask: true,
+        duration: 2000
+      })
+      setTimeout(function () {
+        wx.switchTab({
+          url: '/pages/index/index',
+        })
+      }, 2000)
+      return;
+    }
     // 执行删除后的初始化气瓶数据
     var setList = app.globalData.outSetList;
     var cylinderList = app.globalData.outCylinderList;
@@ -78,20 +93,6 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    if (!util.checkLogin()) {
-      wx.showToast({
-        title: '您还未登录,请先登录',
-        icon: 'none',
-        mask: true,
-        duration: 1000
-      })
-      setTimeout(function () {
-        wx.switchTab({
-          url: '/pages/index/index',
-        })
-      }, 1000)
-      return;
-    }
     // 初始化公共数据
     that.initData();
 
@@ -280,6 +281,13 @@ Page({
 
   // 页面主要逻辑部分--开始
   // 扫码添加
+  start: function() {
+    var that = this;
+    if (that.data.scanFlag) {
+      setTimeout(that.addCylinder, that.data.duration);
+    }
+  },
+
   addCylinder: function () {
     var that = this;
     that.setData({
@@ -300,19 +308,27 @@ Page({
           var cylinderList = that.data.cylinderList;
           var cylinderNumber = cylinderCode.substring(cylinderCode.length - 11);
           if (cylinderNumber.length != 11) {
+            that.setData({
+              duration: 2000
+            })
+            that.start();
             wx.showToast({
               title: '该气瓶码长度不正确',
               icon: 'none',
               mask: true,
-              duration: 2500
+              duration: that.data.duration
             })
           } else {
             if (cylinderList.includes(cylinderNumber)) {
+              that.setData({
+                duration: 2000
+              })
+              that.start();
               wx.showToast({
                 title: '该气瓶已扫描',
                 icon: 'none',
                 mask: true,
-                duration: 2500
+                duration: that.data.duration
               })
             } else {
               // 查询气瓶信息
@@ -320,15 +336,16 @@ Page({
             }
           }
         } else {
+          that.setData({
+            duration: 2000
+          })
+          that.start();
           wx.showToast({
             title: '该码不符合规范',
             icon: 'none',
             mask: true,
-            duration: 2500
+            duration: that.data.duration
           })
-        }
-        if (that.data.scanFlag) {
-          setTimeout(that.addCylinder, 2000);
         }
       },
       fail: (e) => {
@@ -357,23 +374,29 @@ Page({
       success: (res) => {
         if ((res.data.data != null) || (res.data.data != [])) { // 集格下有绑定气瓶，集格计数
           if (setList.includes(setId)) {
+            that.setData({
+              duration: 2000
+            })
+            that.start();
             wx.showToast({
               title: '该集格已扫描',
               icon: 'none',
               mask: true,
-              duration: 2500
+              duration: that.data.duration
             })
           } else {
             setList.push(setId);
             that.setData({
-              setList: setList
+              setList: setList,
+              duration: 3000
             })
+            that.start();
             that.countData();
             wx.showToast({
               title: "集格编号：" + setId + " 绑定气瓶数量：" + res.data.data.length,
               icon: 'none',
               mask: true,
-              duration: 2500
+              duration: that.data.duration
             })
             if (res.data.data.length > 0) {
               for (let i = 0; i < res.data.data.length; i++) {
@@ -381,29 +404,41 @@ Page({
                 that.queryCylinderInfoByNumber(setId, cylinderNumber);
               }
             } else {
+              that.setData({
+                duration: 3000
+              })
+              that.start();
               wx.showToast({
                 title: 'ID为 ' + setId + ' 的集格未绑定气瓶',
                 icon: 'none',
                 mask: true,
-                duration: 2500
+                duration: that.data.duration
               })
             }
           }
         } else {
+          that.setData({
+            duration: 3000
+          })
+          that.start();
           wx.showToast({
             title: 'ID为 ' + setId + ' 的集格未绑定气瓶',
             icon: 'none',
             mask: true,
-            duration: 2500
+            duration: that.data.duration
           })
         }
       },
       fail: (e) => {
+        that.setData({
+          duration: 2000
+        })
+        that.start();
         wx.showToast({
           title: '查询集格接口访问失败',
           icon: 'none',
           mask: true,
-          duration: 2500
+          duration: that.data.duration
         })
       }
     })
@@ -430,11 +465,15 @@ Page({
             if (util.checkEmpty(res.data.data.setId)) {
               let setList = that.data.setList;
               if (setList.includes(res.data.data.setId)) {
+                that.setData({
+                  duration: 2000
+                })
+                that.start();
                 wx.showToast({
                   title: '该集格已扫描',
                   icon: 'none',
                   mask: true,
-                  duration: 2500
+                  duration: that.data.duration
                 })
               } else {
                 that.queryCylinderBySetId(res.data.data.setId);
@@ -461,29 +500,41 @@ Page({
                 allCylinderList: allCylinderList
               })
               that.countData();
+              that.setData({
+                duration: 3000
+              })
+              that.start();
               wx.showToast({
                 title: "二维码：" + cylinderNumber + " 介质：" + gasMediumName + " 过期日期：" + regularInspectionDate,
                 icon: 'none',
                 mask: true,
-                duration: 2500
+                duration: that.data.duration
               })
             }
           } else {
             // 未查询到气瓶信息
+            that.setData({
+              duration: 3000
+            })
+            that.start();
             wx.showToast({
               title: 'ID为 ' + cylinderNumber + ' 的气瓶信息缺失',
               icon: 'none',
               mask: true,
-              duration: 2500
+              duration: that.data.duration
             })
           }
         },
         fail: (e) => {
+          that.setData({
+            duration: 2000
+          })
+          that.start();
           wx.showToast({
             title: '查询气瓶接口访问失败',
             icon: 'none',
             mask: true,
-            duration: 2500
+            duration: that.data.duration
           })
         }
       })
@@ -524,18 +575,26 @@ Page({
             that.countData();
           } else {
             // 未查询到气瓶信息
+            that.setData({
+              duration: 3000
+            })
+            that.start();
             wx.showToast({
               title: 'ID为 ' + cylinderNumber + ' 的气瓶信息缺失',
               icon: 'none',
-              duration: 2000
+              duration: that.data.duration
             })
           }
         },
         fail: (e) => {
+          that.setData({
+            duration: 2000
+          })
+          that.start();
           wx.showToast({
             title: '查询气瓶接口访问失败',
             icon: 'none',
-            duration: 2000
+            duration: that.data.duration
           })
         }
       })
@@ -605,7 +664,6 @@ Page({
       let data = that.data.commonInfo;
       data.cylinderIdList = cylinderIdList;
       data.unitId = unitId;
-      console.log("54data:===" + JSON.stringify(data));
       if (data.creator != "") {
         wx.request({
           url: app.globalData.apiUrl + '/addAfterDetection',
@@ -621,27 +679,33 @@ Page({
                 cylinderList: [],
                 setList: [],
                 setCylinderList: [],
-                allCylinderList: []
+                allCylinderList: [],
+                duration: 3000
               })
               that.setGlobal();
               that.countData();
               wx.showToast({
-                title: '提交成功',
-                icon: 'none'
+                title: res.data.msg,
+                icon: 'none',
+                duration: that.data.duration,
+                mask: true
               })
               setTimeout(function () {
                 wx.redirectTo({
                   url: '/pages/outIndex/outIndex',
                 })
-              }, 1000)
+              }, that.data.duration)
             } else {
               that.setData({
                 disabled: false,
-                opacity: 0.9
+                opacity: 0.9,
+                duration: 3000
               })
               wx.showToast({
-                title: JSON.stringify(res),
-                icon: 'none'
+                title: JSON.stringify(res.data.msg),
+                icon: 'none',
+                duration: that.data.duration,
+                mask: true
               })
             }
           },

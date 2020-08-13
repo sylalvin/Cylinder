@@ -23,9 +23,6 @@ Page({
    */
   onShow: function () {
     var that = this;
-    wx.setKeepScreenOn({
-      keepScreenOn: true,
-    })
     // 此动画不能适应手机
     var animation = wx.createAnimation({
       duration: 2000,

@@ -14,6 +14,10 @@
           <view class="p20" style="display: none;">
               <button class="weui-btn" type="warn" plain="true" bindtap="conScan">连 续 扫 码</button>
           </view>
+
+          <!-- <view class="p20">
+              <button class="weui-btn" type="warn" plain="true" bindtap="requestMessage">订阅通知</button>
+          </view> -->
           
           <view class="p20">
               <button class="weui-btn" type="default" bindtap="logout">退 出 登 录</button>

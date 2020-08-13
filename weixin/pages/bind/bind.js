@@ -663,7 +663,7 @@ Page({
       data.setId = that.data.setId;
       data.setNumber = that.data.setNumber;
     }
-    if (that.checkNull(data.cylinderCode) && that.checkNull(data.cylinderTypeId) && that.checkNull(data.cylinderTypeName) && that.checkNull(data.gasMediumId) && that.checkNull(data.gasMediumName) && that.checkNull(data.cylinderManufacturerName) && that.checkNull(that.data.mYear) && that.checkNull(that.data.mMonth) && that.checkNull(that.data.rYear) && that.checkNull(that.data.rMonth) && that.checkNull(data.nominalTestPressure) && that.checkNull(data.weight) && that.checkNull(data.volume) && that.checkNull(data.wallThickness) && that.checkUserInfoNull(data.employeeId) && that.checkUserInfoNull(data.employeeName)) {
+    if (that.checkNull(data.cylinderCode, "钢瓶号不能为空") && that.checkNull(data.cylinderTypeId, "气瓶类型不能为空") && that.checkNull(data.cylinderTypeName, "气瓶类型不能为空") && that.checkNull(data.gasMediumId, "充装介质不能为空") && that.checkNull(data.gasMediumName, "充装介质不能为空") && that.checkNull(data.cylinderManufacturerName, "制造代码不能为空") && that.checkNull(that.data.mYear, "生产日期年份不能为空") && that.checkNull(that.data.mMonth, "生产日期月份不能为空") && that.checkNull(that.data.rYear, "下检日期年份不能为空") && that.checkNull(that.data.rMonth, "下检日期月份不能为空") && that.checkNull(data.nominalTestPressure, "公称压力不能为空") && that.checkNull(data.weight, "钢瓶重量不能为空") && that.checkNull(data.volume, "钢瓶容积不能为空") && that.checkNull(data.wallThickness, "钢瓶壁厚不能为空") && that.checkUserInfoNull(data.employeeId, "员工 ID 不能为空，请重启小程序再次操作") && that.checkUserInfoNull(data.employeeName, "员工姓名不能为空，请重启小程序再次操作")) {
       data.manufacturingDate = that.data.mYear + '-' + that.data.mMonth + '-' + util.getDaysOfMonth(that.data.mYear + '-' + that.data.mMonth);
       data.regularInspectionDate = that.data.rYear + '-' + that.data.rMonth + '-' + util.getDaysOfMonth(that.data.rYear + '-' + that.data.rMonth);
       wx.request({
@@ -699,7 +699,7 @@ Page({
 
   addNumber: function (cylinderId = null) {
     var that = this;
-    if (that.checkNull(cylinderId) && that.checkRule(that.data.cylinderNumber) && that.checkUserInfoNull(that.data.employeeId) && that.checkUserInfoNull(that.data.employeeName)) {
+    if (that.checkNull(cylinderId, "钢瓶 ID 不能为空") && that.checkRule(that.data.cylinderNumber, "标签码不能为空") && that.checkUserInfoNull(that.data.employeeId, "员工 ID 不能为空，请重启小程序再次操作") && that.checkUserInfoNull(that.data.employeeName, "员工姓名不能为空，请重启小程序再次操作")) {
       wx.request({
         url: app.globalData.apiUrl + '/addNumber',
         method: "POST",
@@ -762,11 +762,11 @@ Page({
     }
   },
 
-  checkNull: function(p) {
+  checkNull: function(p, msg) {
     p = String(p);
-    if (p == "" || p == null) {
+    if (p == "" || p == null || p == 0) {
       wx.showToast({
-        title: '请检查有无漏填项！',
+        title: msg,
         icon: 'none'
       })
       return false;
@@ -775,12 +775,13 @@ Page({
     }
   },
 
-  checkUserInfoNull: function(x) {
+  checkUserInfoNull: function(x, msg) {
     x = String(x);
-    if (x == "" || x == null) {
+    if (x == "" || x == null || x == 0) {
       wx.showToast({
-        title: '请检查有无漏填项！',
-        icon: 'none'
+        title: msg,
+        icon: 'none',
+        duration: 4000
       })
       return false;
     } else {
@@ -788,11 +789,11 @@ Page({
     }
   },
 
-  checkRule: function(q) {
+  checkRule: function(q, msg) {
     q = String(q);
-    if (q == "" || q == null) {
+    if (q == "" || q == null || q == 0) {
       wx.showToast({
-        title: '请检查有无漏填项！',
+        title: msg,
         icon: 'none'
       })
       return false;

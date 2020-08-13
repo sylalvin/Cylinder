@@ -316,7 +316,6 @@ Page({
       method: 'GET',
       success: (res) => {
         if (res.data.data) {
-          // console.log(JSON.stringify(res));
           // 解析结果
           var typeMediumList = [];
           for (let i = 0; i < res.data.data.length; i++) {

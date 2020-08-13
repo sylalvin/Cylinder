@@ -24,6 +24,11 @@ App({
     updateManager.onUpdateFailed(function () {
       // 新的版本下载失败
     })
+
+    // 屏幕保持常亮
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    })
   },
   globalData: {
     userInfo: null,
