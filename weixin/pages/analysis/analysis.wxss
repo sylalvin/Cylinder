@@ -1,0 +1,18 @@
+.weui-cells{
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+.w100 {
+  width: 100%;
+}
+.c_red{
+  color: red;
+}
+.card{
+  border: 1px solid #eee;
+  border-radius: 5px;
+  padding: 10px 15px;
+  background-color: #fff;
+  margin: 0px 5px 5px;
+  box-shadow: 0 1px 5px #ccc;
+}

@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "气瓶出库",
-  "enablePullDownRefresh": true
+  "usingComponents":{
+    "mtoast": "../common/mtoast/mtoast"
+  }
 }

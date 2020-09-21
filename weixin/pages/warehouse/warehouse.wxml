@@ -29,9 +29,10 @@
           </view>
 
           <view class="weui-cells__title">运单号（发货单号）：</view>
-          <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cells weui-cells_after-title" style="display: {{display == 'block' ? 'none' : 'block'}}">
             <view class="weui-cell weui-cell_input">
-              <input bindinput="bindInputChange" class="weui-input" placeholder="请输入发货单号" value="{{inputValue}}"/>
+              <input bindinput="bindInputChange" class="weui-input w80" placeholder="请输入发货单号" value="{{inputValue}}"/>
+              <view bindtap="scanInvoice" class="weui-vcode-btn w20">扫一扫</view>
             </view>
           </view>
 
@@ -47,5 +48,10 @@
             <button class="weui-btn" type="default" bindtap="addCylinder" style="opacity :{{opacity}};" disabled="{{disabled}}">添 加 气 瓶</button><button class="weui-btn" type="primary" bindtap="submitForm" style="opacity :{{opacity}};" disabled="{{disabled}}">提 交</button>
         </view>
 
+    </view>
+
+    <view style="display :{{display}};">
+      <mtoast id='mtoast'>
+      </mtoast>
     </view>
 </view>

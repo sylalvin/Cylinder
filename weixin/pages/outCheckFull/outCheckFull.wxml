@@ -44,7 +44,7 @@
               </view> 
           </view>
 
-          <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cells weui-cells_after-title" style="display: {{display == 'block' ? 'none' : 'block'}}">
               <view class="weui-cell">
                   <view class="weui-cell__bd">
                       <textarea bindinput="bindInputChange" class="weui-textarea" placeholder="填写备注" style="height: 3.3em" maxlength="-1" value="{{commonInfo.remark}}" />
@@ -57,5 +57,10 @@
             <button class="weui-btn" type="default" bindtap="addCylinder" style="opacity :{{opacity}};" disabled="{{disabled}}">添 加 气 瓶</button><button class="weui-btn" type="primary" bindtap="submitForm" style="opacity :{{opacity}};" disabled="{{disabled}}">提 交</button>
         </view>
 
+    </view>
+    <view class="mask" style="display :{{display}};"></view>
+    <view style="display :{{display}};">
+      <mtoast id='mtoast'>
+      </mtoast>
     </view>
 </view>

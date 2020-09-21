@@ -162,9 +162,10 @@ Page({
     if (e.detail.userInfo) {
       //用户按了允许授权按钮
       var that = this;
-      // 获取到用户的信息了，打印到控制台上看下
-      console.log("用户的信息如下：");
-      console.log(e.detail.userInfo);
+      wx.setStorage({
+        key: "wxUserInfo",
+        data: JSON.stringify(e.detail.userInfo)
+      });
       //授权成功后,通过改变 isHide 的值，让实现页面显示出来，把授权页面隐藏起来
       that.setData({
         hasAuthority: true

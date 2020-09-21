@@ -52,3 +52,14 @@
   font-size: 20px;
   border-top: .5px solid #ccc;
 }
+.weui-vcode-btn {
+  display: inline-block;
+  padding: 0 1rem;
+  border-left: 1px solid rgba(0,0,0,.1);
+  line-height: 3.29411765em;
+  font-size: 17px;
+  white-space: nowrap;
+  margin-left: 5px;
+  height: 3.29411765em;
+  vertical-align: middle;
+}

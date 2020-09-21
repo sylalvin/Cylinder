@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "添加充后验满"
+  "navigationBarTitleText": "添加充后验满",
+  "usingComponents":{
+    "mtoast": "../common/mtoast/mtoast"
+  }
 }

@@ -48,7 +48,10 @@ Page({
     ],
     inputValue: "",
     forTransNumberList: [],
-    animationData: {}
+    animationData: {},
+    duration: 2000,
+    display: 'none', // 自定义toast的mask
+    purenessArray: ["普", "2N", "3N", "4N", "5N", "6N", "4.5N"]
   },
 
   onShow: function () {
@@ -104,19 +107,11 @@ Page({
             qcmappversion: res.data.data
           })
         } else {
-          wx.showToast({
-            title: '版本号不存在',
-            icon: 'none',
-            duration: 2000
-          })
+          that.errorModalNoStart("版本号不存在");
         }
       },
       fail: (e) => {
-        wx.showToast({
-          title: '获取版本号接口访问失败',
-          icon: 'none',
-          duration: 2000
-        })
+        that.errorModalNoStart("获取版本号接口访问失败");
       }
     })
   },
@@ -127,7 +122,7 @@ Page({
    */
   onReady: function () {
     var that = this;
-
+    that.mtoast = that.selectComponent("#mtoast");
     wx.getStorage({
       key: 'pj_employee_name',
       success: (res) => {
@@ -185,12 +180,7 @@ Page({
           }
         },
         fail: (e) => {
-          wx.showToast({
-            title: '查询运单号列表接口访问失败',
-            icon: 'none',
-            mask: true,
-            duration: 2500
-          })
+          that.errorModalNoStart("查询运单号列表接口访问失败");
         }
       })
     } else {
@@ -288,12 +278,7 @@ Page({
                   }
                 },
                 fail: (e) => {
-                  wx.showToast({
-                    title: '查询客户信息接口访问失败',
-                    icon: 'none',
-                    mask: true,
-                    duration: 2500
-                  })
+                  that.errorModalNoStart("查询客户信息接口访问失败");
                 }
               })
             } else if (that.judge(res.data.data.warehouseName)) {
@@ -320,12 +305,7 @@ Page({
                   }
                 },
                 fail: (e) => {
-                  wx.showToast({
-                    title: '查询仓库信息接口访问失败',
-                    icon: 'none',
-                    mask: true,
-                    duration: 2500
-                  })
+                  that.errorModalNoStart("查询仓库信息接口访问失败");
                 }
               })
             } else {
@@ -357,12 +337,7 @@ Page({
                   }
                 },
                 fail: (e) => {
-                  wx.showToast({
-                    title: '查询车辆信息接口访问失败',
-                    icon: 'none',
-                    mask: true,
-                    duration: 2500
-                  })
+                  that.errorModalNoStart("查询车辆信息接口访问失败");
                 }
               })
             } else {
@@ -392,12 +367,7 @@ Page({
                   }
                 },
                 fail: (e) => {
-                  wx.showToast({
-                    title: '查询司机信息接口访问失败',
-                    icon: 'none',
-                    mask: true,
-                    duration: 2500
-                  })
+                  that.errorModalNoStart("查询司机信息接口访问失败");
                 }
               })
             } else {
@@ -427,12 +397,7 @@ Page({
                   }
                 },
                 fail: (e) => {
-                  wx.showToast({
-                    title: '查询押运员信息接口访问失败',
-                    icon: 'none',
-                    mask: true,
-                    duration: 2500
-                  })
+                  that.errorModalNoStart("查询押运员信息接口访问失败");
                 }
               })
             } else {
@@ -448,11 +413,7 @@ Page({
           }
         },
         fail: (e) => {
-          wx.showToast({
-            title: '获取订单信息接口访问失败',
-            icon: 'none',
-            duration: 2000
-          })
+          that.errorModalNoStart("获取订单信息接口访问失败");
         }
       })
     }
@@ -460,6 +421,13 @@ Page({
 
   // 页面主要逻辑部分--开始
   // 扫码添加
+  start: function() {
+    var that = this;
+    if (that.data.scanFlag) {
+      that.addCylinder();
+    }
+  },
+
   addCylinder: function () {
     var that = this;
     that.setData({
@@ -480,41 +448,24 @@ Page({
           var cylinderList = that.data.cylinderList;
           var cylinderNumber = cylinderCode.substring(cylinderCode.length - 11);
           if (cylinderNumber.length != 11) {
-            wx.showToast({
-              title: '该气瓶码长度不正确',
-              icon: 'none',
-              mask: true,
-              duration: 2500
-            })
+            that.errorModal("该气瓶码长度不正确");
           } else {
             if (cylinderList.includes(cylinderNumber)) {
-              wx.showToast({
-                title: '该气瓶已扫描',
-                icon: 'none',
-                mask: true,
-                duration: 2500
-              })
+              that.errorModal("该气瓶(" + cylinderNumber + ")已扫描");
             } else {
               // 查询气瓶信息
               that.queryCylinderInfoByNumber(setId, cylinderNumber);
             }
           }
         } else {
-          wx.showToast({
-            title: '该码不符合规范',
-            icon: 'none',
-            mask: true,
-            duration: 2500
-          })
-        }
-        if (that.data.scanFlag) {
-          setTimeout(that.addCylinder, 2000);
+          that.errorModal("该码不符合规范");
         }
       },
       fail: (e) => {
         // 退出扫码动作或调取扫码动作失败
         that.setData({
-          scanFlag: false
+          scanFlag: false,
+          display: 'none'
         })
       }
     })
@@ -526,7 +477,7 @@ Page({
     var qcmappversion = that.data.qcmappversion;
     var setList = that.data.setList;
     wx.request({
-      url: app.globalData.apiUrl + '/getCylinderBySetId',
+      url: app.globalData.apiUrl + '/getSetCylinderBySetId',
       method: 'GET',
       data: {
         'setId': setId
@@ -535,62 +486,94 @@ Page({
         'qcmappversion': qcmappversion
       },
       success: (res) => {
-        if ((res.data.data != null) || (res.data.data != [])) { // 集格下有绑定气瓶，集格计数
+        if(res.data.code != 200) {
+          that.errorModal("ID为 " + setId + " 的集格信息缺失");
+          return;
+        }
+        if ((res.data.data != null) && (res.data.data.cylinderList.length > 0)) { // 集格下有绑定气瓶
+          let data = res.data.data;
           if (setList.includes(setId)) {
-            wx.showToast({
-              title: '该集格已扫描',
-              icon: 'none',
-              mask: true,
-              duration: 2500
-            })
+            that.errorModal("该集格(" + data.setNumber + ")已扫描");
           } else {
-            setList.push(setId);
-            that.setData({
-              setList: setList
-            })
-            that.countData();
-            wx.showToast({
-              title: "集格编号：" + setId + " 绑定气瓶数量：" + res.data.data.length,
-              icon: 'none',
-              mask: true,
-              duration: 2500
-            })
-            if (res.data.data.length > 0) {
-              for (let i = 0; i < res.data.data.length; i++) {
-                let cylinderNumber = res.data.data[i].cylinderNumber;
-                that.queryCylinderInfoByNumber(setId, cylinderNumber);
+            if(util.checkEmpty(data.regularInspectionDate)) {
+              let regularInspectionDate = data.regularInspectionDate.substring(0, 7); // 集格下检日期
+              regularInspectionDate = regularInspectionDate.substring(0, 5) + that.addZero(parseInt(regularInspectionDate.substring(5, 7)) - 1);
+              let effect = util.compareDate(regularInspectionDate);
+              if(!effect) {
+                that.errorModal("集格：" + data.setNumber + "的过期日期为" + regularInspectionDate + "。该集格已过期，请先检验再使用！");
+              } else {
+                let errorString = "";
+                for (let i = 0; i < data.cylinderList.length; i++) {
+                  let regularInspectionDate = "";
+                  if(util.checkEmpty(data.cylinderList[i].regularInspectionDate)) {
+                    regularInspectionDate = data.cylinderList[i].regularInspectionDate.substring(0, 7);
+                    regularInspectionDate = regularInspectionDate.substring(0, 5) + that.addZero(parseInt(regularInspectionDate.substring(5, 7)) - 1);
+                    if(!util.compareDate(regularInspectionDate)) {
+                      errorString += data.cylinderList[i].cylinderNumber + "-" + regularInspectionDate + "\r\n";
+                    }
+                  } else {
+                    regularInspectionDate = "无";
+                    errorString += data.cylinderList[i].cylinderNumber + "-" + regularInspectionDate + "\r\n";
+                  }
+                }
+                if (errorString != "") {
+                  that.errorModal(data.setNumber + "中的过期气瓶：" + "\r\n" + errorString);
+                } else {
+                  that.successShowMyToast("集格：" + data.setNumber + " \r\n绑定气瓶数量：" + data.cylinderList.length + " \r\n集格过期日期：" + regularInspectionDate);
+                  setList.push(setId);
+                  that.setData({
+                    setList: setList
+                  })
+                  that.countData();
+                  for (let i = 0; i < data.cylinderList.length; i++) {
+                    let cylinderNumber = data.cylinderList[i].cylinderNumber;
+                    that.queryCylinderInfoByNumber(setId, cylinderNumber);
+                  }
+                }
               }
             } else {
-              wx.showToast({
-                title: 'ID为 ' + setId + ' 的集格未绑定气瓶',
-                icon: 'none',
-                mask: true,
-                duration: 2500
-              })
+              let errorString = "";
+              for (let i = 0; i < data.cylinderList.length; i++) {
+                let regularInspectionDate = "";
+                if(util.checkEmpty(data.cylinderList[i].regularInspectionDate)) {
+                  regularInspectionDate = data.cylinderList[i].regularInspectionDate.substring(0, 7);
+                  regularInspectionDate = regularInspectionDate.substring(0, 5) + that.addZero(parseInt(regularInspectionDate.substring(5, 7)) - 1);
+                  if(!util.compareDate(regularInspectionDate)) {
+                    errorString += data.cylinderList[i].cylinderNumber + "-" + regularInspectionDate + "\r\n";
+                  }
+                } else {
+                  regularInspectionDate = "无";
+                  errorString += data.cylinderList[i].cylinderNumber + "-" + regularInspectionDate + "\r\n";
+                }
+              }
+              if (errorString != "") {
+                that.errorModal(data.setNumber + "中的过期气瓶：" + "\r\n" + errorString);
+              } else {
+                that.successShowMyToast("集格：" + data.setNumber + " \r\n绑定气瓶数量：" + data.cylinderList.length + " \r\n集格过期日期：尚无记录");
+                setList.push(setId);
+                that.setData({
+                  setList: setList
+                })
+                that.countData();
+                for (let i = 0; i < data.cylinderList.length; i++) {
+                  let cylinderNumber = data.cylinderList[i].cylinderNumber;
+                  that.queryCylinderInfoByNumber(setId, cylinderNumber);
+                }
+              }
             }
           }
         } else {
-          wx.showToast({
-            title: 'ID为 ' + setId + ' 的集格未绑定气瓶',
-            icon: 'none',
-            mask: true,
-            duration: 2500
-          })
+          that.errorModal("集格：" + data.setNumber + "未绑定气瓶");
         }
       },
       fail: (e) => {
-        wx.showToast({
-          title: '查询集格接口访问失败',
-          icon: 'none',
-          mask: true,
-          duration: 2500
-        })
+        that.errorModal("查询集格接口访问失败");
       }
     })
   },
-
+ 
   // 根据气瓶二维码编号查询气瓶信息
-  queryCylinderInfoByNumber: function (setId, cylinderNumber) {
+  queryCylinderInfoByNumber: function (setId, cylinderNumber, setNumber = null) {
     var that = this;
     var qcmappversion = that.data.qcmappversion;
     if (setId == null) {
@@ -610,12 +593,7 @@ Page({
             if (util.checkEmpty(res.data.data.setId)) {
               let setList = that.data.setList;
               if (setList.includes(res.data.data.setId)) {
-                wx.showToast({
-                  title: '该集格已扫描',
-                  icon: 'none',
-                  mask: true,
-                  duration: 2500
-                })
+                that.errorModal("该集格(" + res.data.data.setNumber + ")已扫描");
               } else {
                 that.queryCylinderBySetId(res.data.data.setId);
               }
@@ -625,46 +603,42 @@ Page({
               let cylinderCode = res.data.data.cylinderCode; // 气瓶码
               let cylinderTypeName = res.data.data.cylinderTypeName; // 气瓶类型名称
               let gasMediumName = res.data.data.gasMediumName; // 气瓶介质名称
-              let regularInspectionDate = res.data.data.regularInspectionDate.substring(0, 7); // 气瓶下检日期
+              let regularInspectionDate = ""; // 气瓶下检日期
+              if(!util.checkEmpty(res.data.data.regularInspectionDate)) {
+                regularInspectionDate = "2020-01";
+              } else {
+                regularInspectionDate = res.data.data.regularInspectionDate.substring(0, 7);
+                regularInspectionDate = regularInspectionDate.substring(0, 5) + that.addZero(parseInt(regularInspectionDate.substring(5, 7)) - 1);
+              }
               let cylinderScrapDate = res.data.data.cylinderScrapDate.substring(0, 7); // 气瓶过期日期
-
               let cylinderManufacturingDate = res.data.data.cylinderManufacturingDate.substring(0, 7); // 气瓶生产日期
               let volume = res.data.data.volume; // 气瓶容积
               let nominalTestPressure = res.data.data.nominalTestPressure; // 气瓶压力
               let weight = res.data.data.weight; // 气瓶重量
               let lastFillTime = res.data.data.lastFillTime; // 气瓶最后充装时间
+              let lastFillPureness = that.data.purenessArray[res.data.data.lastFillPureness - 1]; // 气瓶最后充装纯度
               let wallThickness = res.data.data.wallThickness; // 气瓶壁厚
-              cylinderList.push(cylinderNumber);
-              allCylinderList.push({ setId, cylinderNumber, cylinderId, unitId, cylinderCode, cylinderTypeName, gasMediumName, regularInspectionDate, cylinderScrapDate, cylinderManufacturingDate, volume, nominalTestPressure, weight, lastFillTime, wallThickness });
-              that.setData({
-                cylinderList: cylinderList,
-                allCylinderList: allCylinderList
-              })
-              that.countData();
-              wx.showToast({
-                title: "二维码：" + cylinderNumber + " 介质：" + gasMediumName + " 过期日期：" + regularInspectionDate,
-                icon: 'none',
-                mask: true,
-                duration: 2500
-              })
+              let effect = util.compareDate(regularInspectionDate);
+              if(!effect) {
+                that.errorModal("气瓶：" + cylinderNumber + "的过期日期为" + regularInspectionDate + "。该气瓶已过期，请先检验再使用！");
+              } else {
+                cylinderList.push(cylinderNumber);
+                allCylinderList.push({ setId, cylinderNumber, cylinderId, unitId, cylinderCode, cylinderTypeName, gasMediumName, regularInspectionDate, cylinderScrapDate, cylinderManufacturingDate, volume, nominalTestPressure, weight, lastFillTime, lastFillPureness, wallThickness });
+                that.setData({
+                  cylinderList: cylinderList,
+                  allCylinderList: allCylinderList
+                })
+                that.countData();
+                that.successShowMyToast("二维码：" + cylinderNumber + " \r\n介质：" + gasMediumName + " \r\n过期日期：" + regularInspectionDate + " \r\n最后充装时间：" + lastFillTime + " \r\n最后充装纯度：" + lastFillPureness)
+              }
             }
           } else {
             // 未查询到气瓶信息
-            wx.showToast({
-              title: 'ID为 ' + cylinderNumber + ' 的气瓶信息缺失',
-              icon: 'none',
-              mask: true,
-              duration: 2500
-            })
+            that.errorModal('ID为 ' + cylinderNumber + ' 的气瓶信息缺失');
           }
         },
         fail: (e) => {
-          wx.showToast({
-            title: '查询气瓶接口访问失败',
-            icon: 'none',
-            mask: true,
-            duration: 2500
-          })
+          that.errorModal('查询气瓶接口访问失败');
         }
       })
     } else {
@@ -686,7 +660,13 @@ Page({
             let cylinderCode = res.data.data.cylinderCode; // 气瓶码
             let cylinderTypeName = res.data.data.cylinderTypeName; // 气瓶类型名称
             let gasMediumName = res.data.data.gasMediumName; // 气瓶介质名称
-            let regularInspectionDate = res.data.data.regularInspectionDate.substring(0, 7); // 气瓶下检日期
+            let regularInspectionDate = ""; // 气瓶下检日期
+            if(!util.checkEmpty(res.data.data.regularInspectionDate)) {
+              regularInspectionDate = "2020-01";
+            } else {
+              regularInspectionDate = res.data.data.regularInspectionDate.substring(0, 7);
+              regularInspectionDate = regularInspectionDate.substring(0, 5) + that.addZero(parseInt(regularInspectionDate.substring(5, 7)) - 1);
+            }
             let cylinderScrapDate = res.data.data.cylinderScrapDate.substring(0, 7); // 气瓶过期日期
 
             let cylinderManufacturingDate = res.data.data.cylinderManufacturingDate.substring(0, 7); // 气瓶生产日期
@@ -694,9 +674,10 @@ Page({
             let nominalTestPressure = res.data.data.nominalTestPressure; // 气瓶压力
             let weight = res.data.data.weight; // 气瓶重量
             let lastFillTime = res.data.data.lastFillTime; // 气瓶最后充装时间
+            let lastFillPureness = that.data.purenessArray[res.data.data.lastFillPureness - 1]; // 气瓶最后充装纯度
             let wallThickness = res.data.data.wallThickness; // 气瓶壁厚
             setCylinderList.push({ setId, cylinderNumber, cylinderId, unitId, cylinderCode, cylinderTypeName, gasMediumName, regularInspectionDate, cylinderScrapDate, cylinderManufacturingDate, volume, nominalTestPressure, weight, lastFillTime, wallThickness });
-            allCylinderList.push({ setId, cylinderNumber, cylinderId, unitId, cylinderCode, cylinderTypeName, gasMediumName, regularInspectionDate, cylinderScrapDate, cylinderManufacturingDate, volume, nominalTestPressure, weight, lastFillTime, wallThickness });
+            allCylinderList.push({ setId, cylinderNumber, cylinderId, unitId, cylinderCode, cylinderTypeName, gasMediumName, regularInspectionDate, cylinderScrapDate, cylinderManufacturingDate, volume, nominalTestPressure, weight, lastFillTime, lastFillPureness, wallThickness });
             that.setData({
               setCylinderList: setCylinderList,
               allCylinderList: allCylinderList
@@ -704,19 +685,11 @@ Page({
             that.countData();
           } else {
             // 未查询到气瓶信息
-            wx.showToast({
-              title: 'ID为 ' + cylinderNumber + ' 的气瓶信息缺失',
-              icon: 'none',
-              duration: 2000
-            })
+            that.errorModal('ID为 ' + cylinderNumber + ' 的气瓶信息缺失');
           }
         },
         fail: (e) => {
-          wx.showToast({
-            title: '查询气瓶接口访问失败',
-            icon: 'none',
-            duration: 2000
-          })
+          that.errorModal('查询气瓶接口访问失败');
         }
       })
     }
@@ -766,8 +739,8 @@ Page({
     wx.getLocation({
       success: function (res) {
         that.setData({
-          'orderData.lat': res.latitude,
-          'orderData.lng': res.longitude
+          'orderData.lat': String(res.latitude),
+          'orderData.lng': String(res.longitude)
         })
       }
     })
@@ -816,55 +789,120 @@ Page({
                         disabled: true,
                         opacity: 0.3
                       })
-                      wx.showToast({
-                        title: '添加成功',
-                        duration: 2000
-                      })
+                      that.successShowToastNoStart("添加成功");
                     } else {
-                      wx.showToast({
-                        title: '添加失败,请再次提交',
-                        icon: 'none',
-                        mask: true,
-                        duration: 2500
-                      })
+                      that.errorModalNoStart("添加失败,请再次提交");
                     }
                   },
                   fail: (e) => {
-                    wx.showToast({
-                      title: '添加收发接口访问失败,5秒后再次请求',
-                      icon: 'none',
-                      mask: true,
-                      duration: 2500
-                    })
+                    that.errorModalNoStart("添加收发接口访问失败,5秒后再次请求");
                     setTimeout(function () {
                       that.submitForm();
                     }, 5000)
                   }
                 })
               } else {
-                wx.showToast({
-                  title: '创建人或运单号不能为空',
-                  icon: "none",
-                  duration: 2000
-                })
+                that.errorModalNoStart("创建人或运单号不能为空");
                 return;
               }
             } else {
-              wx.showToast({
-                title: '您还未录入数据',
-                icon: 'none',
-                duration: 2000
-              })
+              that.errorModalNoStart("您还未录入数据");
             }
           } else {
-            wx.showToast({
-              title: '未获取到运单信息，请核对运单号',
-              icon: 'none',
-              duration: 2000
-            })
+            that.errorModalNoStart("未获取到运单信息，请核对运单号");
           }
         } else if (res.cancel) {
-          console.log('删除取消');
+          
+        }
+      }
+    })
+  },
+
+  // 扫描发货单号
+  scanInvoice: function () {
+    var that = this;
+    wx.scanCode({
+      success: (res) => {
+        // 此处判断是否为散瓶、集格
+        if (res.result.indexOf("/set/code/") == -1) {
+          if ((res.result.indexOf("0001") == -1) && (res.result.length != 11)) {
+            that.setData({
+              inputValue: res.result
+            })
+            that.queryTransInfo(res.result);
+          } else {
+            that.errorModalNoStart("二维码格式不正确");
+          }
+        } else {
+          that.errorModalNoStart("二维码格式不正确");
+        }
+      },
+      fail: (e) => {
+        that.errorModalNoStart("扫描失败");
+      }
+    })
+  },
+
+  // 正常弹窗提示
+  successShowToastNoStart: function(successMsg) {
+    var that = this;
+    wx.showToast({
+      title: successMsg,
+      icon: 'none',
+      duration: that.data.duration,
+      mask: true
+    })
+  },
+
+  successShowToast: function(successMsg) {
+    var that = this;
+    wx.showToast({
+      title: successMsg,
+      icon: 'none',
+      duration: that.data.duration,
+      mask: true
+    })
+    setTimeout(that.start, that.data.duration);
+  },
+
+  // 自定义toast
+  successShowMyToast: function(successMsg) {
+    var that = this;
+    that.setData({
+      display: 'block'
+    })
+    that.mtoast.showToast(successMsg, that.data.duration);
+    setTimeout(that.start, that.data.duration);
+  },
+
+  // 异常弹窗提示
+  errorModalNoStart: function(errorMsg, title = "错误提醒", confirmText = "关闭", confirmColor = "#576B95") {
+    var that = this;
+    wx.showModal({
+      title: title,
+      content: errorMsg,
+      showCancel: false,
+      confirmText: confirmText,
+      confirmColor: confirmColor,
+      success (res) {
+        if (res.confirm) {
+          
+        }
+      }
+    })
+  },
+
+  errorModal: function(errorMsg, title = "错误提醒", confirmText = "关闭", confirmColor = "#576B95") {
+    var that = this;
+    wx.showModal({
+      title: title,
+      content: errorMsg,
+      showCancel: false,
+      confirmText: confirmText,
+      confirmColor: confirmColor,
+      success (res) {
+        if (res.confirm) {
+          that.start();
         }
       }
     })
@@ -878,6 +916,16 @@ Page({
       return true;
     }
   },
+
+  // 日期补零
+  addZero: function(x) {
+    if(x < 10) {
+      return '0' + x;
+    } else {
+      return '' + x;
+    }
+  },
+  
   // 页面主要逻辑部分--结束
 
   /**

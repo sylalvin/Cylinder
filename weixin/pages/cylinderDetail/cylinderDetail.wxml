@@ -29,8 +29,11 @@
     <text class="result_title_w">下检日期: {{regularInspectionDate}}</text>
 </view>
 <view class="weui-cells weui-cells_after-title result_title">
-    <text class="result_title_w">有效期（报废期）: {{cylinderScrapDate}}</text>
+    <text class="result_title_w">报废期: {{cylinderScrapDate}}</text>
 </view>
 <view class="weui-cells weui-cells_after-title result_title">
     <text class="result_title_w">最后一次充装时间: {{lastFillTime}}</text>
+</view>
+<view class="weui-cells weui-cells_after-title result_title">
+    <text class="result_title_w">最后一次充装纯度: {{lastFillPureness}}</text>
 </view>

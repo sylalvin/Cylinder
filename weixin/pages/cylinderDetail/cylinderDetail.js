@@ -17,7 +17,8 @@ Page({
    *    nominalTestPressure, --气瓶公称压力
    *    weight, --气瓶重量
    *    lastFillTime, --气瓶最后充装时间
-   *    wallThickness  --气瓶壁厚
+   *    wallThickness,  --气瓶壁厚
+   *    lastFillPureness --气瓶最后充装纯度
    * }
    */
   data: {
@@ -32,7 +33,8 @@ Page({
     cylinderManufacturingDate: "",
     regularInspectionDate: "",
     cylinderScrapDate: "",
-    lastFillTime: ""
+    lastFillTime: "",
+    lastFillPureness: ""
   },
 
   /**
@@ -112,7 +114,8 @@ Page({
             cylinderManufacturingDate: that.check(allCylinderList[i].cylinderManufacturingDate),
             regularInspectionDate: that.check(allCylinderList[i].regularInspectionDate),
             cylinderScrapDate: that.check(allCylinderList[i].cylinderScrapDate),
-            lastFillTime: that.check(allCylinderList[i].lastFillTime)
+            lastFillTime: that.check(allCylinderList[i].lastFillTime),
+            lastFillPureness: that.check(allCylinderList[i].lastFillPureness)
           })
         }
       }
@@ -132,7 +135,8 @@ Page({
           cylinderManufacturingDate: that.check(cylinderInfo.cylinderManufacturingDate),
           regularInspectionDate: that.check(cylinderInfo.regularInspectionDate),
           cylinderScrapDate: that.check(cylinderInfo.cylinderScrapDate),
-          lastFillTime: that.check(cylinderInfo.lastFillTime)
+          lastFillTime: that.check(cylinderInfo.lastFillTime),
+          lastFillPureness: that.check(allCylinderList[i].lastFillPureness)
         })
       }
     }
@@ -141,13 +145,10 @@ Page({
 
   // 判断是否为空或null
   check: function (x) {
-    if (x == "") {
+    if((x === null) || (x === 0) || (x === "") || (x === false) || (x === undefined)) {
       return "暂无记录";
-    } else if (x == null) {
-      return 0;
-    } else {
-      return x;
     }
+    return x;
   },
 
   /**

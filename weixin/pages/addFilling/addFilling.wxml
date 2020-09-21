@@ -7,7 +7,7 @@
   </view>
   <view class="weui-tab">
     <view class="weui-cells weui-cells_after-title">
-      <view class="weui-cell weui-cell_select">
+      <view class="weui-cell weui-cell_select" style="display: {{display == 'block' ? 'none' : 'flex'}}">
         <view class="weui-cell__hd weui-cell__hd_in-select-after">
           <view class="weui-label">充装介质</view>
         </view>
@@ -15,7 +15,7 @@
           <input class="weui-input" placeholder="充装介质" type="text" value="{{gasMediumName}}" />
         </view>
       </view>
-      <view class="weui-cell weui-cell_input">
+      <view class="weui-cell weui-cell_input" style="display: {{display == 'block' ? 'none' : 'flex'}}">
         <view class="weui-cell__hd">
           <view class="weui-label">开始时间</view>
         </view>
@@ -26,7 +26,7 @@
           <button class="setTime" bindtap="setBeginTime">开始</button>
         </view>
       </view>
-      <view class="weui-cell weui-cell_input">
+      <view class="weui-cell weui-cell_input" style="display: {{display == 'block' ? 'none' : 'flex'}}">
         <view class="weui-cell__hd">
           <view class="weui-label">生产批次</view>
         </view>
@@ -54,18 +54,24 @@
           </picker>
         </view>
       </view>
-      <view class="weui-cell weui-cell_textarea">
+      <view class="weui-cell weui-cell_textarea" style="display: {{display == 'block' ? 'none' : 'flex'}}">
         <textarea class="weui-textarea" placeholder="填写备注" bindinput="onChangeRemark" data-label="wallThickness" type="digit" />
       </view>
     </view>
   </view>
   <view class="weui-navbar">
       <view class="weui-navbar__item">
-        <view class="weui-navbar__title" bindtap="onAddCylinder">添加气瓶</view>
+        <view class="weui-navbar__title" bindtap="addCylinder">添加气瓶</view>
       </view>
       <view class="weui-navbar__item weui-bar__item_on">
         <view class="weui-navbar__title" bindtap="onSubmitMission" style="opacity :{{opacity}};" disabled="{{disabled}}">创建任务</view>
       </view>
     <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
   </view>
+
+  <view class="mask" style="display :{{display}};"></view>
+    <view style="display :{{display}};">
+      <mtoast id='mtoast'>
+      </mtoast>
+    </view>
 </view>  

@@ -8,7 +8,8 @@ Page({
   data: {
     qcmappversion: app.globalData.qcmappversion,
     name: "",
-    mobile: ""
+    mobile: "",
+    wxUserInfo: null
   },
 
   // onload
@@ -45,6 +46,14 @@ Page({
       success: function (res) {
         that.setData({
           'mobile': res.data
+        })
+      },
+    });
+    wx.getStorage({
+      key: 'wxUserInfo',
+      success: function (res) {
+        that.setData({
+          'wxUserInfo': JSON.parse(res.data)
         })
       },
     });

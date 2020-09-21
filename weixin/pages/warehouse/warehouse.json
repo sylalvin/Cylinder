@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "厂外库区流转"
+  "navigationBarTitleText": "厂外库区流转",
+  "usingComponents":{
+    "mtoast": "../common/mtoast/mtoast"
+  }
 }

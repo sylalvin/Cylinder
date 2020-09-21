@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "客户回瓶"
+  "navigationBarTitleText": "客户回瓶",
+  "usingComponents":{
+    "mtoast": "../common/mtoast/mtoast"
+  }
 }

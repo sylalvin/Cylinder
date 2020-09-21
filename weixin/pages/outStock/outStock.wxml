@@ -8,20 +8,11 @@
         </view>
       </navigator>
 
-          <!-- <view class="weui-cells">
-            <view class="weui-cell webox">
-              <radio-group class="radio-group" bindchange="radioChange">
-                <radio class="radio" wx:for="{{bottleType}}" wx:key="name" value="{{item.value}}" checked="{{item.checked}}">
-                    <text>{{item.name}}</text>
-                </radio>
-              </radio-group>
-            </view>
-          </view> -->
-
           <view class="weui-cells__title">运单号（发货单号）</view>
-          <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cells weui-cells_after-title" style="display: {{display == 'block' ? 'none' : 'block'}}">
             <view class="weui-cell weui-cell_input">
-              <input bindinput="bindInputChange" class="weui-input" placeholder="请输入发货单号" value="{{orderData.shipNumber}}"/>
+              <input bindinput="bindInputChange" class="weui-input w80" placeholder="请输入发货单号" value="{{orderData.shipNumber}}"/>
+              <view bindtap="scanInvoice" class="weui-vcode-btn w20">扫一扫</view>
             </view>
           </view>
 
@@ -33,18 +24,7 @@
             </scroll-view>
           </view>
 
-          <!-- <view class="weui-cells">
-            <view class="weui-cell webox">
-              <checkbox-group prop="checkbox" multi="{{true}}" bindchange="checkboxPassChange">
-                <view class="checkbox" wx:for="{{checkboxPass}}" wx:key="value" checked="{{item.checked}}">
-                  <text>{{item.value}}</text>
-                  <checkbox value="{{item.name}}" checked="{{item.checked}}"/>
-                </view>
-              </checkbox-group>
-            </view>
-          </view> -->
-
-          <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cells weui-cells_after-title" style="display: {{display == 'block' ? 'none' : 'block'}}">
               <view class="weui-cell">
                   <view class="weui-cell__bd">
                       <textarea bindinput="remarkInputChange" class="weui-textarea" placeholder="填写备注" style="height: 3.3em" maxlength="-1" value="{{commonInfo.remark}}" />
@@ -57,5 +37,11 @@
             <button class="weui-btn" type="default" bindtap="addCylinder" style="opacity :{{opacity}};" disabled="{{disabled}}">添 加 气 瓶</button><button class="weui-btn" type="primary" bindtap="submitForm" style="opacity :{{opacity}};" disabled="{{disabled}}">提 交</button>
         </view>
 
+    </view>
+
+    <view class="mask" style="display :{{display}};"></view>
+    <view style="display :{{display}};">
+      <mtoast id='mtoast'>
+      </mtoast>
     </view>
 </view>

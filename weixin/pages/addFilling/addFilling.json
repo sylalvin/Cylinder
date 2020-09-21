@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "添加充装"
+  "navigationBarTitleText": "添加充装",
+  "usingComponents":{
+    "mtoast": "../common/mtoast/mtoast"
+  }
 }

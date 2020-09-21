@@ -643,6 +643,7 @@ Page({
     var that = this;
     var data = {
       unitId: 1,
+      fillingUnit: "上海化学工业区浦江特种气体有限公司",
       cylinderCode: that.data.cylinderCode,
       cylinderTypeId: that.data.cylinderTypeId,
       gasMediumId: that.data.gasMediumId,

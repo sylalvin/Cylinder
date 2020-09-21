@@ -227,6 +227,7 @@ Page({
           let gasMediumName = res.data.data.gasMediumName; // 气瓶介质名称
           let gasMediumId = res.data.data.gasMediumId; // 气瓶介质名称
           let regularInspectionDate = res.data.data.regularInspectionDate.substring(0, 7); // 气瓶下检日期
+          regularInspectionDate = regularInspectionDate.substring(0, 5) + that.addZero(parseInt(regularInspectionDate.substring(5, 7)) - 1);
           let cylinderScrapDate = res.data.data.cylinderScrapDate.substring(0, 7); // 气瓶过期日期
 
           let cylinderManufacturingDate = res.data.data.cylinderManufacturingDate.substring(0, 7); // 气瓶生产日期
@@ -402,6 +403,15 @@ Page({
         icon: 'none',
         duration: 2000
       })
+    }
+  },
+
+  // 日期补零
+  addZero: function(x) {
+    if(x < 10) {
+      return '0' + x;
+    } else {
+      return '' + x;
     }
   },
 

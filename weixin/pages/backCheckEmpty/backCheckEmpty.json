@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "添加回厂验空"
+  "navigationBarTitleText": "添加回厂验空",
+  "usingComponents":{
+    "mtoast": "../common/mtoast/mtoast"
+  }
 }
